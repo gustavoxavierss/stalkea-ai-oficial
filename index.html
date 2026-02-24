@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stalkea AI - Insights de Perfil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .animate-text-shine {
+            background: linear-gradient(90deg, #a855f7 0%, #d8b4fe 50%, #a855f7 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="selection:bg-purple-500 selection:text-white">
+
+    <section class="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="w-full max-w-[500px] z-10">
+            <div id="main-card" class="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[40px] p-6 flex flex-col items-center shadow-2xl relative ring-1 ring-white/5">
+                
+                <div id="step-search" class="w-full flex flex-col items-center">
+                    <img id="profile-img-search" src="https://i.ibb.co/9m6pG513/f85d6e00-b101-4f91-9aff-0f3b3a3f1d09.png" class="w-48 h-48 object-contain mb-4">
+                    
+                    <h1 class="text-[28px] font-black text-center leading-tight mb-4 tracking-tighter">
+                        Não fique na <span class="animate-text-shine">dúvida</span>. Descubra a verdade.
+                    </h1>
+
+                    <div class="w-full space-y-4">
+                        <input type="text" id="username-input" placeholder="Digite o usuário (ex: neymarjr)" 
+                            class="w-full h-14 bg-white/5 border border-white/10 rounded-full px-6 text-center text-lg focus:outline-none focus:border-purple-500 transition-all">
+                        
+                        <button onclick="handleSearch()" class="w-full h-[68px] relative rounded-full font-black text-[22px] uppercase tracking-tight bg-gradient-to-r from-[#6B59D8] to-[#9D4EDD] hover:scale-[1.02] active:scale-[0.95] transition-all shadow-lg shadow-purple-500/20">
+                            Espionar Agora
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-loading" class="hidden w-full py-12 flex flex-col items-center">
+                    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500 mb-4"></div>
+                    <p class="text-purple-400 font-bold animate-pulse">Estabelecendo conexão segura...</p>
+                </div>
+
+                <div id="step-confirm" class="hidden w-full flex flex-col items-center">
+                    <h2 class="text-[#a855f7] text-[28px] font-bold mb-2">Confirme o Instagram</h2>
+                    <p class="text-gray-400 text-center mb-6">Você deseja espionar o perfil <br><span id="display-username" class="text-white font-bold">@usuario</span>?</p>
+                    
+                    <div class="flex items-center gap-6 mb-8 w-full justify-center">
+                        <div class="relative">
+                            <div class="w-24 h-24 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600">
+                                <img id="profile-avatar" src="" class="w-full h-full rounded-full bg-black object-cover">
+                            </div>
+                        </div>
+                        <div class="flex gap-4 text-center">
+                            <div>
+                                <div id="count-posts" class="text-xl font-bold">0</div>
+                                <div class="text-xs text-gray-500">posts</div>
+                            </div>
+                            <div>
+                                <div id="count-followers" class="text-xl font-bold">0</div>
+                                <div class="text-xs text-gray-500">seguidores</div>
+                            </div>
+                            <div>
+                                <div id="count-following" class="text-xl font-bold">0</div>
+                                <div class="text-xs text-gray-500">seguindo</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-sm text-gray-400 mb-6 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        Perfil identificado via protocolo seguro.
+                    </p>
+
+                    <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 mb-6 w-full">
+                        <p class="text-red-400 text-xs text-center leading-relaxed">
+                            <strong>Aviso:</strong> Limite de apenas 1 pesquisa por dispositivo, certifique-se que digitou o usuário corretamente.
+                        </p>
+                    </div>
+
+                    <div class="flex gap-3 w-full">
+                        <button onclick="backToSearch()" class="flex-1 h-14 rounded-2xl border border-white/10 font-bold hover:bg-white/5 transition-all text-sm">
+                            Corrigir @
+                        </button>
+                        <button onclick="alert('Iniciando Monitoramento...')" class="flex-[2] h-14 rounded-2xl bg-gradient-to-r from-[#6B59D8] to-[#9D4EDD] font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+                            CONFIRMAR <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="footer-stats" class="mt-6 text-center opacity-80">
+                <p class="text-[#a855f7] font-black text-sm">
+                    +76.562 <span class="text-gray-500 font-bold">perfis analisados hoje</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        async function handleSearch() {
+            const user = document.getElementById('username-input').value.replace('@', '').trim();
+            if (!user) return alert("Digite um usuário!");
+
+            // UI Transition
+            showStep('step-loading');
+
+            try {
+                // OPÇÃO: INTEGRAÇÃO COM AGREGADOR DE DADOS PÚBLICOS
+                // Para produção, utilize o fetch com sua chave de API
+                const data = await fetchSocialInsights(user);
+                
+                if(data) {
+                    updateUI(data);
+                    showStep('step-confirm');
+                }
+            } catch (error) {
+                alert("Erro ao consultar dados públicos. Verifique o nome.");
+                showStep('step-search');
+            }
+        }
+
+        async function fetchSocialInsights(username) {
+            /** * Opção C: Simulação de resposta da API (Mock)
+             * Substitua a URL abaixo pela sua integração real do RapidAPI
+             */
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Aqui simulamos dados reais baseados no nome
+                    const isCelebrity = username.length < 8; 
+                    resolve({
+                        username: username,
+                        posts: Math.floor(Math.random() * 500),
+                        followers: isCelebrity ? (Math.random() * 10).toFixed(1) + "M" : Math.floor(Math.random() * 5000),
+                        following: Math.floor(Math.random() * 1000),
+                        avatar: `https://unavatar.io/instagram/${username}` // Busca avatar público
+                    });
+                }, 1500);
+            });
+        }
+
+        function updateUI(data) {
+            document.getElementById('display-username').innerText = '@' + data.username;
+            document.getElementById('count-posts').innerText = data.posts;
+            document.getElementById('count-followers').innerText = data.followers;
+            document.getElementById('count-following').innerText = data.following;
+            document.getElementById('profile-avatar').src = data.avatar;
+        }
+
+        function showStep(stepId) {
+            ['step-search', 'step-loading', 'step-confirm'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(stepId).classList.remove('hidden');
+        }
+
+        function backToSearch() {
+            showStep('step-search');
+        }
+    </script>
+</body>
+</html>
