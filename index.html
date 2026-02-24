@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="pt-BR"><head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stalkea AI - Monitoramento Oficial</title>
@@ -8,6 +10,9 @@
         body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .hidden { display: none !important; }
+        /* Suaviza a transição de entrada das telas */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -17,7 +22,7 @@
                 
                 <div id="main-card" class="w-full max-w-[500px] bg-black/40 backdrop-blur-xl border border-white/10 rounded-[40px] p-8 flex flex-col items-center shadow-2xl relative ring-1 ring-white/5">
                     
-                    <div id="step-search" class="w-full flex flex-col items-center">
+                    <div id="step-search" class="w-full flex flex-col items-center fade-in">
                         <img src="https://i.ibb.co/9m6pG513/f85d6e00-b101-4f91-9aff-0f3b3a3f1d09.png" class="w-64 h-64 object-contain mb-4">
                         <h1 class="text-white text-[28px] font-black text-center leading-tight mb-4 tracking-tighter">
                             Não fique na <span class="text-purple-500">dúvida</span>. Descubra a verdade em segundos.
@@ -25,33 +30,43 @@
                         <p class="text-gray-400 text-center text-sm mb-6">Digite o nome de usuário abaixo</p>
                         
                         <input type="text" id="username-input" placeholder="ex: neymarjr" 
+                            onkeypress="if(event.key === 'Enter') iniciarBusca()"
                             class="w-full h-14 bg-white/5 border border-white/10 rounded-full px-6 text-center text-lg mb-4 focus:outline-none focus:border-purple-500 transition-all">
                         
-                        <button onclick="iniciarBusca()" class="w-full h-[68px] rounded-full font-bold text-[19px] bg-gradient-to-r from-[#6B59D8] to-[#9D4EDD] hover:scale-[1.03] transition-all uppercase">
+                        <button onclick="iniciarBusca()" class="w-full h-[68px] rounded-full font-bold text-[19px] bg-gradient-to-r from-[#6B59D8] to-[#9D4EDD] hover:scale-[1.03] active:scale-[0.98] transition-all uppercase">
                             Espionar Agora
                         </button>
                     </div>
 
-                    <div id="step-loading" class="hidden flex flex-col items-center py-12">
+                    <div id="step-loading" class="hidden flex flex-col items-center py-12 fade-in">
                         <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-purple-500 mb-4"></div>
-                        <p class="text-purple-400 font-bold animate-pulse">Conectando ao banco de dados...</p>
+                        <p class="text-purple-400 font-bold animate-pulse text-lg">Infiltrando no banco de dados...</p>
+                        <p class="text-gray-500 text-xs mt-2">Isso pode levar alguns segundos</p>
                     </div>
 
-                    <div id="step-confirm" class="hidden w-full flex flex-col items-center">
+                    <div id="step-confirm" class="hidden w-full flex flex-col items-center fade-in">
                         <h2 class="text-[#a855f7] text-[24px] font-bold mb-2">Confirme o Instagram</h2>
-                        <p class="text-gray-400 text-center text-sm mb-6">Deseja monitorar <span id="res-user" class="text-white font-bold">@usuario</span>?</p>
+                        <p class="text-gray-400 text-center text-sm mb-6">Deseja monitorar o perfil <span id="res-user" class="text-white font-bold">@usuario</span>?</p>
                         
                         <div class="flex items-center gap-4 mb-8">
-                            <div class="w-20 h-20 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 to-purple-600">
+                            <div class="w-20 h-20 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 to-purple-600 shadow-lg">
                                 <img id="res-avatar" src="" class="w-full h-full rounded-full bg-black object-cover">
                             </div>
                             <div class="flex gap-4 text-center">
-                                <div><div id="res-posts" class="font-bold">0</div><div class="text-[10px] text-gray-500">posts</div></div>
-                                <div><div id="res-followers" class="font-bold">0</div><div class="text-[10px] text-gray-500">seguidores</div></div>
-                                <div><div id="res-following" class="font-bold">0</div><div class="text-[10px] text-gray-500">seguindo</div></div>
+                                <div><div id="res-posts" class="font-bold text-lg">0</div><div class="text-[10px] text-gray-500 uppercase">posts</div></div>
+                                <div><div id="res-followers" class="font-bold text-lg">0</div><div class="text-[10px] text-gray-500 uppercase">seguidores</div></div>
+                                <div><div id="res-following" class="font-bold text-lg">0</div><div class="text-[10px] text-gray-500 uppercase">seguindo</div></div>
                             </div>
                         </div>
-                        <button onclick="window.location.reload()" class="w-full h-14 rounded-2xl bg-gradient-to-r from-[#6B59D8] to-[#9D4EDD] font-bold">CONFIRMAR</button>
+
+                        <div class="w-full flex flex-col gap-3">
+                            <button onclick="location.reload()" class="w-full h-14 rounded-2xl bg-gradient-to-r from-[#6B59D8] to-[#9D4EDD] font-bold text-lg hover:opacity-90 transition-all">
+                                CONFIRMAR ACESSO
+                            </button>
+                            <button onclick="voltarBusca()" class="w-full h-10 text-gray-500 text-sm hover:text-white transition-all">
+                                Corrigir @
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -61,36 +76,61 @@
 
     <script>
         async function iniciarBusca() {
-            const user = document.getElementById('username-input').value.replace('@', '').trim();
-            if(!user) return alert("Digite o usuário!");
+            const input = document.getElementById('username-input');
+            const user = input.value.replace('@', '').trim();
+            
+            if(!user) {
+                alert("Por favor, digite o nome de usuário.");
+                return;
+            }
 
-            document.getElementById('step-search').classList.add('hidden');
-            document.getElementById('step-loading').classList.remove('hidden');
+            alternarTelas('step-loading');
 
             try {
+                // Chama a API que você criou na pasta /api
                 const response = await fetch(`/api/instagram?username=${user}`);
+                
+                if (!response.ok) throw new Error("Erro na resposta do servidor");
+                
                 const data = await response.json();
 
                 if(data.username) {
                     document.getElementById('res-user').innerText = '@' + data.username;
-                    document.getElementById('res-posts').innerText = format(data.posts);
-                    document.getElementById('res-followers').innerText = format(data.followers);
-                    document.getElementById('res-following').innerText = format(data.following);
+                    // Os nomes abaixo (posts, followers) devem ser iguais aos que você definiu no api/instagram.js
+                    document.getElementById('res-posts').innerText = formatar(data.posts);
+                    document.getElementById('res-followers').innerText = formatar(data.followers);
+                    document.getElementById('res-following').innerText = formatar(data.following);
                     document.getElementById('res-avatar').src = data.avatar || `https://unavatar.io/instagram/${data.username}`;
                     
-                    document.getElementById('step-loading').classList.add('hidden');
-                    document.getElementById('step-confirm').classList.remove('hidden');
-                } else { throw new Error(); }
+                    alternarTelas('step-confirm');
+                } else { 
+                    throw new Error("Perfil não encontrado"); 
+                }
             } catch (e) {
-                alert("Perfil não encontrado.");
-                window.location.reload();
+                console.error(e);
+                alert("Ocorreu um erro ao buscar o perfil. Verifique se o nome está correto.");
+                alternarTelas('step-search');
             }
         }
 
-        function format(n) {
+        function formatar(n) {
+            n = Number(n);
+            if (isNaN(n)) return 0;
             if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
             if (n >= 1000) return (n/1000).toFixed(1) + 'k';
             return n;
+        }
+
+        function alternarTelas(idAtiva) {
+            const telas = ['step-search', 'step-loading', 'step-confirm'];
+            telas.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(idAtiva).classList.remove('hidden');
+        }
+
+        function voltarBusca() {
+            alternarTelas('step-search');
         }
     </script>
 </body></html>
