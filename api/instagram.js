@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
     const { username } = req.query;
-    const RAPID_API_KEY = "SUA_CHAVE_AQUI"; // Sua chave fica segura aqui no servidor
+    const RAPID_API_KEY = "e3cd2d0d2fmsh0dced0acd30a539p1c7338jsn42c4ecbbcca6"; // Sua chave fica segura aqui no servidor
 
     if (!username) {
         return res.status(400).json({ error: "Username é obrigatório" });
@@ -24,4 +24,5 @@ export default async function handler(req, res) {
     } catch (error) {
         res.status(500).json({ error: "Erro ao buscar dados" });
     }
+
 }
